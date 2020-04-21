@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package masterworker;
+
+service WorkerService {
+  rpc DoWork(WorkRequest) returns (WorkResponse) {}
+}
+
+message WorkRequest {
+  string request_type = 1;
+  repeated Shard files = 2;
+  string user_id = 3;
+  string output_directory = 4;
+}
+
+message WorkResponse {
+  bool success = 1;
+  repeated string output_files = 2;
+}
+
+message Shard {
+  string path = 1;
+  int64 start = 2;
+  int64 end = 3;
+  int32 index = 4;
+}
